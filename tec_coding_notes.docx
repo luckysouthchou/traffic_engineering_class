@@ -1,0 +1,16 @@
+2.10.2020
+-----------------
+data format
+Event_ID                                  int64
+Participant_ID                            int64
+Event Severity 1                         object
+Event Severity 2                         object
+Event Start                              object
+                                          ...
+Object 3 Location                        object
+Object 3 Type                            object
+(Non)Motorist 3 Pre-Incident Maneuver    object
+(Non)Motorist 3 Evasive Maneuver         object
+Final Narrative                          object
+Length: 76, dtype: object
+[Finished in 0.634s]
