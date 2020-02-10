@@ -16,7 +16,8 @@ Events.loc[0]
 # show the whole length of columns
 Events.index
 
-
+#test
+#pppp
 Events.set_index('Sec Task 1', inplace=True)
 # how many rows and columns and other information
 Events.info()
@@ -30,7 +31,7 @@ len(Events)
 # print(event.iloc[0:30]['Sec Task 1'])
 
 # print(event.head())
-
+# try something new
 # pp.plot(event.iloc[1:5]['Event Start']
 
 # substract two rows
