@@ -2,27 +2,28 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as pp
+import locale
+import csv
 # digest table
 event = pd.read_csv('/Users/apple/Documents/traffic_engineering/Events.csv', encoding='latin-1')
 # show evets's id
 
 '''Events.Event_ID
 # show all column's name
-Events.columns.values
+event.columns.values
 # show sec task1's value;bacause it's important to see the distracted bahaviour
-Events['Sec Task 1']
+event['Sec Task 1']
 # show first row's value
-Events.loc[0]
+event.loc[0]
 # show the whole length of columns
-Events.index
+event.index
 
-#test
-#pppp
-Events.set_index('Sec Task 1', inplace=True)
+
+event.set_index('Sec Task 1', inplace=True)
 # how many rows and columns and other information
 Events.info()
 # how many rows
-len(Events)
+len(event)
 
 '''
 
@@ -35,5 +36,77 @@ len(Events)
 # pp.plot(event.iloc[1:5]['Event Start']
 
 # substract two rows
-print(event.dtypes)
-#test11 = event.iloc[0]['Impact Time'].astype(float) - event.iloc[0]['Event Start'].astype(float)
+# print(event.dtypes)
+
+
+# convert str with commas in it as thousands seperators
+
+# create a row "new" denote the time between reaction start and event start
+'''
+for i in range(0, event_length):
+    event = event.assign(ett =locale.atoi(event.iloc[i]['Event Start']))
+    b = locale.atoi(event.iloc[i]['Reaction Start'])
+
+
+
+    c = b - a
+    def fn(row): return c
+    col = event.apply(fn, axis=1)
+    event = event.assign(new=col.values)
+    print(event)'''
+
+event_length = len(event.index)
+
+# create the list to store the clean data
+# Est:event start
+# Rst: reaction Time
+# Itt:impact time
+# Rt:reaction time duration(reaction Time - event start)
+# Tast1:Sec Task 1 Start Time
+# Taet1:Sec Task 1 End Time
+# Tast2:Sec Task 2 Start Time
+# Taet2:Sec Task 2 End Time
+# Tast3:Sec Task 3 Start Time
+# Taet3:Sec Task 3 End Time
+
+Est = []
+Rst = []
+Itt = []
+Rt = []
+Tast1 = []
+Taet1 = []
+Tast2 = []
+Taet2 = []
+Tast3 = []
+Taet3 = []
+
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+for i in range(0, event_length):
+    Est.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Event Start'])))
+    Rst.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Reaction Start'])))
+    Itt.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Impact Time'])))
+    Tast1.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 1 Start Time'])))
+    Taet1.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 1 End Time'])))
+    Tast2.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 2 Start Time'])))
+    Taet2.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 2 End Time'])))
+    Tast3.append(event.apply(lambda x: event.iloc[i]['Sec Task 3 Start Time']))
+    Taet3.append(event.apply(lambda x: event.iloc[i]['Sec Task 3 End Time']))
+    Rt.append(event.apply(lambda x: locale.atoi(
+        event.iloc[i]['Reaction Start']) - locale.atoi(event.iloc[i]['Event Start'])))
+
+# create a column from the list
+event['Est'] = Est
+event['Rst'] = Rst
+event['Itt'] = Itt
+event['Rt'] = Rt
+event['Tast1'] = Tast1
+event['Tast2'] = Tast2
+event['Tast3'] = Tast3
+event['Taet1'] = Taet1
+event['Taet2'] = Taet2
+event['Taet3'] = Taet3
+#print(event[['Rt', 'Rst', 'Itt', 'Rt', 'Tast1', 'Est']])
+
+with open('myinenenen.csv', 'w', newline='') as file:
+    writer =
