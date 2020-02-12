@@ -1,11 +1,12 @@
 import numpy as np
 import pandas as pd
 import matplotlib
-import matplotlib.pyplot as pp
+import matplotlib.pyplot as plt
 import locale
 import csv
 # digest table
-event = pd.read_csv('/Users/apple/Documents/traffic_engineering/Events.csv', encoding='latin-1')
+event = pd.read_csv(
+    '/Users/apple/Documents/traffic_engineering/event_five_record_sample.csv', encoding='latin-1')
 # show evets's id
 
 '''Events.Event_ID
@@ -56,7 +57,7 @@ for i in range(0, event_length):
     print(event)'''
 
 event_length = len(event.index)
-
+print(event_length)
 # create the list to store the clean data
 # Est:event start
 # Rst: reaction Time
@@ -79,13 +80,16 @@ Tast2 = []
 Taet2 = []
 Tast3 = []
 Taet3 = []
-
+#test = []
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 for i in range(0, event_length):
     Est.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Event Start'])))
-    Rst.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Reaction Start'])))
-    Itt.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Impact Time'])))
+    #Est.append(event['Est'].apply(lambda x: locale.atoi(event.iloc[i]['Event Start'])))
+    #print(locale.atoi(event.iloc[i]['Event Start']))
+    Rst.append(event.apply(lambda x: locale.atoi(
+        event.iloc[i]['Reaction Start'])))
+    Itt.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Impact Time'])), dtype=int)
     Tast1.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 1 Start Time'])))
     Taet1.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 1 End Time'])))
     Tast2.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 2 Start Time'])))
@@ -106,7 +110,42 @@ event['Tast3'] = Tast3
 event['Taet1'] = Taet1
 event['Taet2'] = Taet2
 event['Taet3'] = Taet3
-#print(event[['Rt', 'Rst', 'Itt', 'Rt', 'Tast1', 'Est']])
+#event['test'] = test
 
+'''
+event[['Event Start', 'Reaction Start', 'Impact Time']] = event[[
+    'Event Start', 'Reaction Start', 'Impact Time']].apply(pd.to_numeric, errors='ignore')
+print(event[['Event Start']].describe())
+
+print(event['Event Start'])
+
+print(event['Event Start'].dtype)
+print(type(event['Event Start']))
+'''
+# print(event[['Rt', 'Rst', 'Itt', 'Rt', 'Tast1', 'Est']])
+'''
+# try to write to a csv file with new columns
 with open('myinenenen.csv', 'w', newline='') as file:
     writer =
+'''
+'''
+# try to see the table with 5 rows for runnning fast
+print(event[['Rt']].describe())
+print(event.columns)
+print(event)
+
+'''
+'''
+print(event['Est'])
+print(type(event['Est']))
+event['Est'].astype(int)
+'''
+'''
+event.plot(
+    x='Est', y='Rt', color='red'
+)
+plt.show
+'''
+print(event['Est'])
+# print(event['test'])
+print(event['Event Start'])
