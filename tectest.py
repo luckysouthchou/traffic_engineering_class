@@ -8,13 +8,29 @@ import seaborn as sns
 sns.set(style='ticks')
 # digest table
 all_event = pd.read_csv(
-    '/Users/apple/Documents/traffic_engineering/Events_big_set_after_name.csv', encoding='latin-1')
+    '/Users/apple/Documents/traffic_engineering/Events_Crashes.csv', encoding='latin-1')
 # select driver who reacte the time
 react_event = all_event[all_event['Reaction Start'] > 0]
 non_react_event = all_event[all_event['Reaction Start'] < 0]
+cellphone_texting = all_event[all_event['Sec Task 1'] == 'Cell phone, Texting']
 
-# switch the data set we want to research:event
-event = react_event
+cellphone_all = all_event[(
+    all_event['Sec Task 1'] == 'Cell phone, Texting')
+    | (all_event['Sec Task 1'] == 'Cell phone, Browsing')
+    | (all_event['Sec Task 1'] == 'Cell phone, Locating/reaching/answering')
+    | (all_event['Sec Task 1'] == 'Cell phone, other')]
+
+cellphone_all1 = react_event[(
+    react_event['Sec Task 1'] == 'Cell phone, Texting')
+    | (react_event['Sec Task 1'] == 'Cell phone, Browsing')
+    | (react_event['Sec Task 1'] == 'Cell phone, Locating/reaching/answering')]
+
+# !!!!!!!switch the data set we want to research:event!!!!!!!!!!!
+
+event = cellphone_all1
+
+
+print(event.head(5))
 
 '''
 print(event.head(4))
@@ -64,13 +80,53 @@ ax.set_xticklabels(ax.get_xticklabels(), rotation=30, ha='right')
 # plt.scatter(event['rt'], event['irt'], c=(0, 0, 0), alpha=0.5)
 
 '''
+
 sns.boxplot(x="Crash Severity 1", y="rt", hue="Driving Behavior 1", data=event,
             linewidth=0.5)
 '''
+
+'''
+# plot cellphone_all_related value about rt & irt
+sns.boxplot(x="Sec Task 1", y="irt", hue="Crash Severity 1", data=event,
+            linewidth=0.5)
+        '''
+# cellphone_all Surface Cndtn_about rt & irt
+'''
+sns.boxplot(x="Surface Cndtn", y="rt", hue="Sec Task 1", data=event,
+            linewidth=0.5)
+        '''
+# cellphone_all Light  about rt & irt
+'''
+sns.boxplot(x="Light", y="irt", hue="Sec Task 1", data=event,
+            linewidth=0.5)
+'''
+# cell_phone  Traffic Flow (seperation method)    rt& irt
+'''
+sns.boxplot(x="Traffic Flow", y="rt", hue="Sec Task 1", data=event,
+            linewidth=0.5)
+'''
+# cell phone Traffic Control  rt& irt
+'''
+sns.boxplot(x="Traffic Control", y="irt", hue="Sec Task 1", data=event,
+            linewidth=0.5)
+'''
+'''
+# cell phone Grade rt& irt
+sns.boxplot(x="Grade", y="rt", hue="Sec Task 1", data=event,
+            linewidth=0.5)
+'''
+# cell phone Locality rt& irt
+'''
+sns.boxplot(x="Locality", y="irt", hue="Sec Task 1", data=event,
+            linewidth=0.5)
+plt.xticks(rotation=30)
+'''
 # sns.distplot(rt)
 # how the only mean value and its confidence interval within each nested category:
+'''
 sns.catplot(x='Driving Behavior 1', y='rt', hue='Event Severity 1',
             kind='bar', data=event)
+
 
 plt.xticks(rotation=30)
 
@@ -79,4 +135,12 @@ ind = np.arange(N)
 width = 0.35
 
 p1 = plt.bar(ind,)
+'''
+# how the only mean value and its confidence interval within each nested category:
+'''
+sns.catplot(x='Sec Task 1', y='irt', hue='Event Severity 1',
+            kind='bar', data=event)
+plt.xticks(rotation=30)
+'''
+
 plt.show()
