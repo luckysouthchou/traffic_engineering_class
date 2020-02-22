@@ -6,7 +6,7 @@ import locale
 import csv
 # digest table
 event = pd.read_csv(
-    '/Users/apple/Documents/traffic_engineering/event_five_record_sample.csv', encoding='latin-1')
+    '/Users/apple/Documents/traffic_engineering/event_five_record_sample1.csv', encoding='latin-1')
 # show evets's id
 
 '''Events.Event_ID
@@ -56,8 +56,8 @@ for i in range(0, event_length):
     event = event.assign(new=col.values)
     print(event)'''
 
-event_length = len(event.index)
-print(event_length)
+'''event_length = len(event.index)
+print(event_length)'''
 # create the list to store the clean data
 # Est:event start
 # Rst: reaction Time
@@ -70,7 +70,7 @@ print(event_length)
 # Tast3:Sec Task 3 Start Time
 # Taet3:Sec Task 3 End Time
 
-Est = []
+'''Est = []
 Rst = []
 Itt = []
 Rt = []
@@ -79,17 +79,17 @@ Taet1 = []
 Tast2 = []
 Taet2 = []
 Tast3 = []
-Taet3 = []
+Taet3 = []'''
 #test = []
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
-
+'''locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')'''
+'''
 for i in range(0, event_length):
     Est.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Event Start'])))
     #Est.append(event['Est'].apply(lambda x: locale.atoi(event.iloc[i]['Event Start'])))
     #print(locale.atoi(event.iloc[i]['Event Start']))
     Rst.append(event.apply(lambda x: locale.atoi(
         event.iloc[i]['Reaction Start'])))
-    Itt.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Impact Time'])), dtype=int)
+    Itt.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Impact Time'])))
     Tast1.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 1 Start Time'])))
     Taet1.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 1 End Time'])))
     Tast2.append(event.apply(lambda x: locale.atoi(event.iloc[i]['Sec Task 2 Start Time'])))
@@ -98,8 +98,8 @@ for i in range(0, event_length):
     Taet3.append(event.apply(lambda x: event.iloc[i]['Sec Task 3 End Time']))
     Rt.append(event.apply(lambda x: locale.atoi(
         event.iloc[i]['Reaction Start']) - locale.atoi(event.iloc[i]['Event Start'])))
-
-# create a column from the list
+'''
+'''# create a column from the list
 event['Est'] = Est
 event['Rst'] = Rst
 event['Itt'] = Itt
@@ -111,7 +111,7 @@ event['Taet1'] = Taet1
 event['Taet2'] = Taet2
 event['Taet3'] = Taet3
 #event['test'] = test
-
+'''
 '''
 event[['Event Start', 'Reaction Start', 'Impact Time']] = event[[
     'Event Start', 'Reaction Start', 'Impact Time']].apply(pd.to_numeric, errors='ignore')
@@ -146,6 +146,9 @@ event.plot(
 )
 plt.show
 '''
+
+'''
 print(event['Est'])
 # print(event['test'])
 print(event['Event Start'])
+'''
