@@ -15,17 +15,17 @@ all_event = pd.read_csv(
     '/Users/apple/Documents/traffic_engineering/event_five_record_sample.csv', encoding='latin-1')
 
 '''
-
+'''
 # big_data_sample_route(for test and debug)
 all_event = pd.read_csv(
     '/Users/apple/Documents/traffic_engineering/Events_Crashes.csv', encoding='latin-1')
-
-
 '''
+
+
 # original_data_route
 all_event = pd.read_csv(
-    '/Users/apple/Documents/traffic_engineering/data_set/Events888.csv', encoding='latin-1')
-'''
+    '/Users/apple/Documents/traffic_engineering/data_set/Events110.csv', encoding='latin-1')
+
 
 # select the crash_relevent_data_subject nor non_subject
 
@@ -145,14 +145,15 @@ plt.show()
 
 event = event_related_event_subject
 
-
+'''
 # sucstract reation time
 # test a small piece of event time set if they right value type
-#rt = event.iloc[430:450]['Reaction Start'] - event.iloc[430:450]['Event Start']
+rt = event.iloc[430:450]['Reaction Start'].astype(
+    float) - event.iloc[430:450]['Event Start'].astype(float)
 
-rt = event.iloc[:]['Reaction Start'] - event.iloc[:]['Event Start']
+#rt = event.iloc[:]['Reaction Start'] - event.iloc[:]['Event Start']
 
-rt = event['Reaction Start'] - event['Event Start']
+#rt = event['Reaction Start'] - event['Event Start']
 
 # =======问题===
 #print(event.iloc[430:450]['Participant_ID', 'Reaction Start'])
@@ -170,7 +171,7 @@ event['irt'] = irt/1000
 
 print(event[['irt']].describe())
 
-
+'''
 # 'Event_ID', 'Participant_ID' ang other columns related to description events will not be impact the result, so we will not use
 # choose categorical values
 
@@ -179,7 +180,11 @@ print(event[['irt']].describe())
 
 categorical_columns = ['Sec Task 1', 'Light', 'Weather', 'Locality']
 
-numerical_columns = ['rt', 'irt']
+#numerical_columns = ['rt', 'irt']
+numerical_columns = ['Frnt Seat Passngrs', 'Rear Seat Passngrs']
+for i in numerical_columns:
+    event[:, [i]] = event[:, [i]].astype(float)
+
 
 outputs = ['Event Severity 1']
 for i in outputs:
@@ -194,7 +199,7 @@ for category in categorical_columns:
 print(event['Light'].cat.categories)
 print(event['Light'].head())
 print(event['Light'].head().cat.codes)
-print(event['rt'].head())
+# print(event['rt'].head())
 
 
 # convert categorical columns to tensors
@@ -215,6 +220,8 @@ print(categorical_data)
 # convert numerical value to tensors
 numerical_data = np.stack([event[col].values for col in numerical_columns], 1)
 # convert numerical value to tensors
+
+
 numerical_data = torch.tensor(numerical_data, dtype=torch.float)
 print(numerical_data)
 
